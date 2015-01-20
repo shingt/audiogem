@@ -168,19 +168,19 @@ module Audio
           SOUND_BASE_Eb, SOUND_BASE_E, SOUND_BASE_F, SOUND_BASE_Gb, SOUND_BASE_G, SOUND_BASE_Ab
         ].freeze
         newSoundNames = []
-        rootIndex = find(soundNames, rootSound)
+        rootIndex = soundNames.index(rootSound)
 
         currentRootIndex = rootIndex
         for _ in 0...soundNames.count do
           currentRootIndex = currentRootIndex == soundNames.count ? 0 : currentRootIndex
           newSoundNames.push(soundNames[currentRootIndex])
-          ++currentRootIndex
+          currentRootIndex += 1
         end
         return newSoundNames
       end
 
       def self.generateTuningPureBase(tuningInfo, centOffsets) 
-        tuning = nil
+        tuning = {}
         soundNames = self.arrangeSoundNamesForRootSound(tuningInfo.rootSound)
 
         # 平均律をベースに演算
@@ -189,10 +189,11 @@ module Audio
         for i in 0...soundNames.count do
           sound = soundNames[i]
           frequencyForEqual = tuningEqualBase[sound]
-          frequency = frequencyForEqual * pow(2.0, centOffsets[i])
+          frequency = frequencyForEqual * (2.0 ** centOffsets[i])
 
           tuning[sound] = frequency
         end
+
         return tuning
       end
 
@@ -212,7 +213,7 @@ module Audio
 
       # 複数オクターブ分生成
       def self.generateWholeTuningPure(tuningPureBase)
-        tuning = nil
+        tuning = {}
         for octave in 1...MAX_OCTAVE_SUFFIX do
           tuningForCurrentOctave = self.generateTuningForOctave(octave, tuningPureBase)
           for (soundName, frequency) in tuningForCurrentOctave do
