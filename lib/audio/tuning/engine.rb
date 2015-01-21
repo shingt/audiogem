@@ -35,7 +35,8 @@ module Audio
         return pitch * (2.0 ** (order / 12.0))
       end
 
-      # SOUND_BASE_は http:#ja.wikipedia.org/wiki/%E9%9F%B3%E5%90%8D%E3%83%BB%E9%9A%8E%E5%90%8D%E8%A1%A8%E8%A8%98 のC1, D1などに当たる
+      # Refer to: http:#ja.wikipedia.org/wiki/%E9%9F%B3%E5%90%8D%E3%83%BB%E9%9A%8E%E5%90%8D%E8%A1%A8%E8%A8%98
+      # BASE_C means C1
       def self.generateTuningEqualBase(pitch, transpositionNote) 
 
         # Based on the case in which transposition is "C"
@@ -74,7 +75,7 @@ module Audio
           baseTuning[i] *= 2.0
         end
 
-        # Gbまでは上がってGからは下がる
+        # FIXME: Go up until Gb and go down after that
         indexBoundary = 6  # index of Gb
         indexOfTranspositionNote = sounds.index(transpositionNote)
         if (indexBoundary < indexOfTranspositionNote) then
@@ -90,8 +91,7 @@ module Audio
         return tuning
       end
 
-
-      # あるオクターブに対する12音をtuningBaseを整数倍することで生成
+      # Integral multiplication for 12 tuningBase sounds for each octave 
       def self.generateTuningForOctave(octave, tuningBase)
         tuningForCurrentOctave = {}
         for key in tuningBase.keys do
@@ -102,7 +102,7 @@ module Audio
         return tuningForCurrentOctave
       end
 
-      # - Tuning Equal -
+      # Tuning Equal
       def self.transposeTuningBase(tuningBase, transpositionNote)
         return tuningBase
       end
@@ -121,8 +121,7 @@ module Audio
         return tuning
       end
 
-      # - Tuning Pure -
-
+      # Tuning Pure
       # 純正律（長調）centによる計算
       # 基準ピッチとの周波数比r = 2^(n/12 + m/1200)
       # n:音程差（半音であれば1） m:平均律とのズレ(cent)
