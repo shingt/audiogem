@@ -121,10 +121,10 @@ module Audio
         return tuning
       end
 
-      # Tuning Pure
-      # 純正律（長調）centによる計算
-      # 基準ピッチとの周波数比r = 2^(n/12 + m/1200)
-      # n:音程差（半音であれば1） m:平均律とのズレ(cent)
+      # Tuning Pure Major
+      # Frequency ratio to base pitch: r = 2^(n/12 + m/1200)
+      # n: num of sound intervals (1 for semitone.)  
+      # m: offset to Equal Pitch(cent)
       def self.centOffsetsForPureMajor
         offset1 =   0.0 / 1200.0
         offset2 = -29.3 / 1200.0
@@ -141,9 +141,10 @@ module Audio
         return [offset1, offset2, offset3, offset4, offset5, offset6, offset7, offset8, offset9, offset10, offset11, offset12]
       end
 
-      # 純正律（短調）centによる計算
-      # 基準ピッチとの周波数比r = 2^(n/12 + m/1200)
-      # n:音程差（半音であれば1） m:平均律とのズレ(cent)
+      # Tuning Pure Minor
+      # Frequency ratio to base pitch: r = 2^(n/12 + m/1200)
+      # n: num of sound intervals (1 for semitone.)  
+      # m: offset to Equal Pitch(cent)
       def self.centOffsetsForPureMinor 
         offset1  =   0.0 / 1200.0
         offset2  =  33.2 / 1200.0
@@ -160,7 +161,7 @@ module Audio
         return [offset1, offset2, offset3, offset4, offset5, offset6, offset7, offset8, offset9, offset10, offset11, offset12]
       end
 
-      # 指定ルート音を最初の要素とした配列を生成
+      # Generates sounds array based on assigned root sound
       def self.arrangeSoundNamesForRootSound(rootSound) 
         soundNames = [
           SOUND_BASE_A, SOUND_BASE_Bb, SOUND_BASE_B, SOUND_BASE_C, SOUND_BASE_Db, SOUND_BASE_D,
@@ -182,7 +183,7 @@ module Audio
         tuning = {}
         soundNames = self.arrangeSoundNamesForRootSound(tuningInfo.rootSound)
 
-        # 平均律をベースに演算
+        # Based on equal tuning
         tuningEqualBase = self.generateTuningEqualBase(tuningInfo.pitch, tuningInfo.transpositionNote)
 
         for i in 0...soundNames.count do
@@ -210,7 +211,7 @@ module Audio
         return tuning
       end
 
-      # 複数オクターブ分生成
+      # Generates for multiple octaves 
       def self.generateWholeTuningPure(tuningPureBase)
         tuning = {}
         for octave in 1...MAX_OCTAVE_SUFFIX do
