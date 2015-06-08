@@ -1,4 +1,8 @@
-### Audio
+# audiogem
+
+[![Build Status](https://travis-ci.org/shingt/audiogem.svg?branch=master)](https://travis-ci.org/shingt/audiogem)
+
+## Description
 
 Beta version.
 
@@ -9,7 +13,7 @@ Simulation for sound frequencies. Currently one can change:
 * Transposition
 * Type (Equal, PureMajor, PureMinor)
 
-### Usage
+## Usage
 
 ```
 info = Audio::Tuning::Info.new(442, "equal", "C", "C")
