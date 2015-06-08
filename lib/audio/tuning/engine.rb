@@ -7,16 +7,16 @@ module Audio
 
       MAX_OCTAVE_SUFFIX = 6
 
-      def self.generateTuningByInfo(tuningInfo: TNCTuningInfo)  
+      def self.tuneByInfo(tuningInfo: TNCTuningInfo)  
         tuning = nil
 
         case tuningInfo.tuningType 
         when "equal"
-          tuning = self.generateTuningEqualByInfo(tuningInfo)
+          tuning = self.tuneEqualByInfo(tuningInfo)
         when "pureMajor"
-          tuning = self.generateTuningPureMajorByInfo(tuningInfo)
+          tuning = self.tunePureMajorByInfo(tuningInfo)
         when "pureMinor"
-          tuning = self.generateTuningPureMinorByInfo(tuningInfo)
+          tuning = self.tunePureMinorByInfo(tuningInfo)
         when "pythagorean"
           Logger.log("Not yet supported. Abort.")
         else
@@ -37,7 +37,7 @@ module Audio
 
       # Refer to: http:#ja.wikipedia.org/wiki/%E9%9F%B3%E5%90%8D%E3%83%BB%E9%9A%8E%E5%90%8D%E8%A1%A8%E8%A8%98
       # BASE_C means C1
-      def self.generateTuningEqualBase(pitch, transpositionNote) 
+      def self.tuneEqualBase(pitch, transpositionNote) 
 
         # Based on the case in which transposition is "C"
         baseTuning = [
@@ -92,7 +92,7 @@ module Audio
       end
 
       # Integral multiplication for 12 tuningBase sounds for each octave 
-      def self.generateTuningForOctave(octave, tuningBase)
+      def self.tuneForOctave(octave, tuningBase)
         tuningForCurrentOctave = {}
         for key in tuningBase.keys do
           keyForCurrentOctave = key.to_s + octave.to_s
@@ -107,12 +107,12 @@ module Audio
         return tuningBase
       end
 
-      def self.generateTuningEqualByInfo(tuningInfo)
+      def self.tuneEqualByInfo(tuningInfo)
         tuning = {}
-        tuningBase = self.generateTuningEqualBase(tuningInfo.pitch, tuningInfo.transpositionNote)
+        tuningBase = self.tuneEqualBase(tuningInfo.pitch, tuningInfo.transpositionNote)
 
         for octave in 1...MAX_OCTAVE_SUFFIX do
-          tuningForThisOctave = self.generateTuningForOctave(octave, tuningBase)
+          tuningForThisOctave = self.tuneForOctave(octave, tuningBase)
           for (soundName, frequency) in tuningForThisOctave do
             tuning[soundName] = frequency
           end
@@ -178,12 +178,12 @@ module Audio
         return newSoundNames
       end
 
-      def self.generateTuningPureBase(tuningInfo, centOffsets) 
+      def self.tunePureBase(tuningInfo, centOffsets) 
         tuning = {}
         soundNames = self.arrangeSoundNamesForRootSound(tuningInfo.rootSound)
 
         # Based on equal tuning
-        tuningEqualBase = self.generateTuningEqualBase(tuningInfo.pitch, tuningInfo.transpositionNote)
+        tuningEqualBase = self.tuneEqualBase(tuningInfo.pitch, tuningInfo.transpositionNote)
 
         for i in 0...soundNames.count do
           sound = soundNames[i]
@@ -195,16 +195,16 @@ module Audio
         return tuning
       end
 
-      def self.generateTuningPureMajorByInfo(tuningInfo)
+      def self.tunePureMajorByInfo(tuningInfo)
         centOffsetsPureMajor = self.centOffsetsForPureMajor()
-        tuningPureMajorBase = self.generateTuningPureBase(tuningInfo, centOffsetsPureMajor)
+        tuningPureMajorBase = self.tunePureBase(tuningInfo, centOffsetsPureMajor)
         tuning = self.generateWholeTuningPure(tuningPureMajorBase)
         return tuning
       end
 
-      def self.generateTuningPureMinorByInfo(tuningInfo)
+      def self.tunePureMinorByInfo(tuningInfo)
         centOffsetsPureMinor = self.centOffsetsForPureMinor()
-        tuningPureMinorBase = self.generateTuningPureBase(tuningInfo, centOffsetsPureMinor)
+        tuningPureMinorBase = self.tunePureBase(tuningInfo, centOffsetsPureMinor)
         tuning = self.generateWholeTuningPure(tuningPureMinorBase)
         return tuning
       end
@@ -213,7 +213,7 @@ module Audio
       def self.generateWholeTuningPure(tuningPureBase)
         tuning = {}
         for octave in 1...MAX_OCTAVE_SUFFIX do
-          tuningForCurrentOctave = self.generateTuningForOctave(octave, tuningPureBase)
+          tuningForCurrentOctave = self.tuneForOctave(octave, tuningPureBase)
           for (soundName, frequency) in tuningForCurrentOctave do
             tuning[soundName] = frequency
           end
