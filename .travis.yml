@@ -18,7 +18,7 @@ branches:
 gemfile:
   - Gemfile
 
-script: bundle exec -- test/test_audio.rb
+script: bundle exec -- ruby test/test_audio.rb
 
 sudo: false
 
