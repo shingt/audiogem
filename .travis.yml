@@ -11,6 +11,8 @@ os:
   - linux
   - osx
 
+cache: bundler
+
 branches:
   only:
     - master
@@ -18,7 +20,7 @@ branches:
 gemfile:
   - Gemfile
 
-script: bundle exec -- ruby test/test_audio.rb
+script: bundle exec rake
 
 sudo: false
 
