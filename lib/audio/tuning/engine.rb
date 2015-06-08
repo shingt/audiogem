@@ -116,7 +116,6 @@ module Audio
           for (soundName, frequency) in tuningForThisOctave do
             tuning[soundName] = frequency
           end
-
         end
         return tuning
       end
@@ -190,7 +189,6 @@ module Audio
           sound = soundNames[i]
           frequencyForEqual = tuningEqualBase[sound]
           frequency = frequencyForEqual * (2.0 ** centOffsets[i])
-
           tuning[sound] = frequency
         end
 
