@@ -125,15 +125,15 @@ module Audio
       # n: num of sound intervals (1 for semitone.)  
       # m: offset to Equal Pitch(cent)
       def self.centOffsetsForPureMajor
-        offset1 =   0.0 / 1200.0
-        offset2 = -29.3 / 1200.0
-        offset3 =   3.9 / 1200.0
-        offset4 =  15.6 / 1200.0
-        offset5 = -13.7 / 1200.0
-        offset6 =  -2.0 / 1200.0
-        offset7 = -31.3 / 1200.0
-        offset8 =   2.0 / 1200.0
-        offset9 = -27.4 / 1200.0
+        offset1  =   0.0 / 1200.0
+        offset2  = -29.3 / 1200.0
+        offset3  =   3.9 / 1200.0
+        offset4  =  15.6 / 1200.0
+        offset5  = -13.7 / 1200.0
+        offset6  =  -2.0 / 1200.0
+        offset7  = -31.3 / 1200.0
+        offset8  =   2.0 / 1200.0
+        offset9  = -27.4 / 1200.0
         offset10 = -15.6 / 1200.0
         offset11 =  17.6 / 1200.0
         offset12 = -11.7 / 1200.0
