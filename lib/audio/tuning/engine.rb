@@ -7,24 +7,24 @@ module Audio
 
       MAX_OCTAVE_SUFFIX = 6
 
-      def self.tuneByInfo(tuningInfo: TNCTuningInfo)  
+      def self.tuneByInfo(info)  
         tuning = nil
 
-        case tuningInfo.tuningType 
+        case info.tuningType 
         when "equal"
-          tuning = self.tuneEqualByInfo(tuningInfo)
+          tuning = self.tuneEqualByInfo(info)
         when "pureMajor"
-          tuning = self.tunePureMajorByInfo(tuningInfo)
+          tuning = self.tunePureMajorByInfo(info)
         when "pureMinor"
-          tuning = self.tunePureMinorByInfo(tuningInfo)
+          tuning = self.tunePureMinorByInfo(info)
         when "pythagorean"
           Logger.log("Not yet supported. Abort.")
         else
-          Logger.log("Unexpected tuning type: #{tuningInfo.tuningType}. Abort.")
+          Logger.log("Unexpected tuning type: #{info.tuningType}. Abort.")
           return nil
         end
 
-        Logger.log("Pitch: #{tuningInfo.pitch}")
+        Logger.log("Pitch: #{info.pitch}")
 
         return tuning
       end
@@ -198,19 +198,19 @@ module Audio
       def self.tunePureMajorByInfo(tuningInfo)
         centOffsetsPureMajor = self.centOffsetsForPureMajor()
         tuningPureMajorBase = self.tunePureBase(tuningInfo, centOffsetsPureMajor)
-        tuning = self.generateWholeTuningPure(tuningPureMajorBase)
+        tuning = self.tuneWholeTuningPure(tuningPureMajorBase)
         return tuning
       end
 
       def self.tunePureMinorByInfo(tuningInfo)
         centOffsetsPureMinor = self.centOffsetsForPureMinor()
         tuningPureMinorBase = self.tunePureBase(tuningInfo, centOffsetsPureMinor)
-        tuning = self.generateWholeTuningPure(tuningPureMinorBase)
+        tuning = self.tuneWholeTuningPure(tuningPureMinorBase)
         return tuning
       end
 
       # Generates for multiple octaves 
-      def self.generateWholeTuningPure(tuningPureBase)
+      def self.tuneWholeTuningPure(tuningPureBase)
         tuning = {}
         for octave in 1...MAX_OCTAVE_SUFFIX do
           tuningForCurrentOctave = self.tuneForOctave(octave, tuningPureBase)
