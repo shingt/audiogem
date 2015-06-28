@@ -8,16 +8,17 @@ Beta version.
 
 Simulation for sound frequencies. Currently one can change:
 
-* rootSound
+* Root Sound
 * Pitch
 * Transposition
 * Type (Equal, PureMajor, PureMinor)
+* Octave Range (first and last)
 
 ## Usage
 
 ```
-info = Audio::Tuning::Info.new(442, "equal", "C", "C")
-tuning = Audio::Tuning::Engine.generateTuningByInfo(tuningInfo: info)
+info   = Audio::Tuning::Info.new(442, "equal", "C", "C")
+tuning = Audio::Tuning::Engine.tuneByInfo(info)
 pp tuning
 ```
 
@@ -71,19 +72,7 @@ which generates:
  "Ab4"=>417.1924462053085,
  "A4"=>442.0,
  "Bb4"=>468.28268770680853,
- "B4"=>496.1282253527429,
- "C5"=>525.6295448312027,
- "Db5"=>556.885104053534,
- "D5"=>589.9992155431552,
- "Eb5"=>625.0823945689081,
- "E5"=>662.2517279794932,
- "F5"=>701.6312649699441,
- "Gb5"=>743.3524310842836,
- "G5"=>787.5544668360599,
- "Ab5"=>834.384892410617,
- "A5"=>884.0,
- "Bb5"=>936.5653754136171,
- "B5"=>992.2564507054858}
+ "B4"=>496.1282253527429}
 ```
 
 ### Author
