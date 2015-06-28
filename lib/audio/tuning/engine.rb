@@ -5,11 +5,7 @@ module Audio
   module Tuning
     class Engine 
 
-      DEFAULT_MAX_OCTAVE = 6
-
       def self.tuneByInfo(info)  
-        info.octaveRange = OctaveRange.new(1, 3) if info.octaveRange == nil
-
         tuning = nil
 
         case info.tuningType 
@@ -112,8 +108,10 @@ module Audio
       def self.tuneEqualByInfo(tuningInfo)
         tuning = {}
         tuningBase = self.tuneEqualBase(tuningInfo.pitch, tuningInfo.transpositionNote)
+        octaveRange = tuningInfo.octaveRange
+        p octaveRange.last
 
-        for octave in 1...DEFAULT_MAX_OCTAVE do
+        for octave in octaveRange.first..octaveRange.last do
           tuningForThisOctave = self.tuneForOctave(octave, tuningBase)
           for (soundName, frequency) in tuningForThisOctave do
             tuning[soundName] = frequency
@@ -200,21 +198,21 @@ module Audio
       def self.tunePureMajorByInfo(tuningInfo)
         centOffsetsPureMajor = self.centOffsetsForPureMajor()
         tuningPureMajorBase = self.tunePureBase(tuningInfo, centOffsetsPureMajor)
-        tuning = self.tuneWholeTuningPure(tuningPureMajorBase)
+        tuning = self.tuneWholeTuningPure(tuningPureMajorBase, tuningInfo.octaveRange)
         return tuning
       end
 
       def self.tunePureMinorByInfo(tuningInfo)
         centOffsetsPureMinor = self.centOffsetsForPureMinor()
         tuningPureMinorBase = self.tunePureBase(tuningInfo, centOffsetsPureMinor)
-        tuning = self.tuneWholeTuningPure(tuningPureMinorBase)
+        tuning = self.tuneWholeTuningPure(tuningPureMinorBase, tuningInfo.octaveRange)
         return tuning
       end
 
       # Generates for multiple octaves 
-      def self.tuneWholeTuningPure(tuningPureBase)
+      def self.tuneWholeTuningPure(tuningPureBase, octaveRange)
         tuning = {}
-        for octave in 1...DEFAULT_MAX_OCTAVE do
+        for octave in octaveRange.first..octaveRange.last do
           tuningForCurrentOctave = self.tuneForOctave(octave, tuningPureBase)
           for (soundName, frequency) in tuningForCurrentOctave do
             tuning[soundName] = frequency

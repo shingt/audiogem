@@ -1,8 +1,9 @@
 module Audio
   class OctaveRange
-    def initialize(low, high)
-      @low  = low
-      @high = high
+    def initialize(first, last)
+      @first = first
+      @last  = last
     end
+    attr_accessor :first, :last
   end
 end
