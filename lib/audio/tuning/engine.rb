@@ -5,7 +5,7 @@ module Audio
   module Tuning
     class Engine 
 
-      MAX_OCTAVE_SUFFIX = 6
+      DEFAULT_MAX_OCTAVE = 6
 
       def self.tuneByInfo(info)  
         tuning = nil
@@ -111,7 +111,7 @@ module Audio
         tuning = {}
         tuningBase = self.tuneEqualBase(tuningInfo.pitch, tuningInfo.transpositionNote)
 
-        for octave in 1...MAX_OCTAVE_SUFFIX do
+        for octave in 1...DEFAULT_MAX_OCTAVE do
           tuningForThisOctave = self.tuneForOctave(octave, tuningBase)
           for (soundName, frequency) in tuningForThisOctave do
             tuning[soundName] = frequency
@@ -212,7 +212,7 @@ module Audio
       # Generates for multiple octaves 
       def self.tuneWholeTuningPure(tuningPureBase)
         tuning = {}
-        for octave in 1...MAX_OCTAVE_SUFFIX do
+        for octave in 1...DEFAULT_MAX_OCTAVE do
           tuningForCurrentOctave = self.tuneForOctave(octave, tuningPureBase)
           for (soundName, frequency) in tuningForCurrentOctave do
             tuning[soundName] = frequency
