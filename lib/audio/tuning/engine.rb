@@ -8,6 +8,8 @@ module Audio
       DEFAULT_MAX_OCTAVE = 6
 
       def self.tuneByInfo(info)  
+        info.octaveRange = OctaveRange.new(1, 3) if info.octaveRange == nil
+
         tuning = nil
 
         case info.tuningType 

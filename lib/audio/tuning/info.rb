@@ -1,3 +1,5 @@
+require 'audio/octave_range'
+
 module Audio
   module Tuning
     class Info
@@ -6,7 +8,7 @@ module Audio
         tuningType, 
         rootSound, 
         transpositionNote, 
-        octaveRange = nil
+        octaveRange = OctaveRange.new(1, 3)
       )
         @pitch             = pitch
         @tuningType        = tuningType
